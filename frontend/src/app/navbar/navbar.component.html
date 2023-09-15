@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-light coustom-navbar" style="padding:0%;">
+    <div class="container-fluid mx-3" style="margin-top: 5px;">
+        <a class="navbar-brand" href="#">
+                User Management App
+        </a>
+        <button class="navbar-toggler btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <div *ngIf="!islogin">
+            <button type="button"  class="btn btn-outline-success mx-2 p-1" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+                </div>
+                 <div *ngIf="islogin">
+            <button type="button"  class="btn btn-outline-success mx-2 p-1"  data-bs-toggle="modal" data-bs-target="#SignupModal">Sign Up</button>
+                </div>
+               <!-- <div>
+                    <button type="button"  class="btn btn-outline-success mx-2 p-1" >Logout</button>
+                </div>   -->
+        </div>
+    </div>
+</nav>
+<div class="modal fade" #signupModal id="SignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">Register</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userSignup">
+                <div class="mb-3">
+                    <label for="name">Name:*</label>
+                    <input class="form-control" id="name" type="text" formControlName="name">
+                    <div class="text-danger" *ngIf="userSignup.get('name')?.hasError('required') && userSignup.get('name')?.touched">
+                        Name is required.
+                      </div>
+                      <div class="text-danger" *ngIf="userSignup.get('name')?.hasError('pattern') && userSignup.get('name')?.touched">
+                        Only alphabets and spaces are allowed.
+                      </div>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile">Mobile:</label>
+                    <input class="form-control" id="mobile" type="text" formControlName="mobile">
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input class="form-control" id="email" type="email" formControlName="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input class="form-control" id="password" type="password" formControlName="password">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="signup()">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+
+   <div class="modal fade" #loginModal id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">Log In</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userLogin">
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" formControlName="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" formControlName="password">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+        </div>
+      </div>
+    </div> 
+  </div> 

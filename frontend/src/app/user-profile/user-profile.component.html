@@ -1,0 +1,73 @@
+<app-navbar></app-navbar>
+
+<div>
+    <div class="card">
+        <div class="card-header">
+          User Profile
+        </div>
+           <div class="card-body">
+                <p>Name: {{userData.name}} </p>
+                <p>Mobile: {{userData.mobile}} </p>
+                <p>Email: {{userData.email}} </p>
+           </div>
+        <div class="card-footer">
+            <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal">Edit Profile</button>
+            <button class="btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModal">Delete Profile</button>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" #editModal id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="exampleModalLabel">Update Profile</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="EditUser">
+                <div class="mb-3">
+                    <label for="name">Name:*</label>
+                    <input class="form-control" id="name" type="text" formControlName="name">
+                    <div class="text-danger" *ngIf="EditUser.get('name')?.hasError('required') && EditUser.get('name')?.touched">
+                        Name is required.
+                      </div>
+                      <div class="text-danger" *ngIf="EditUser.get('name')?.hasError('pattern') && EditUser.get('name')?.touched">
+                        Only alphabets and spaces are allowed.
+                      </div>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile">Mobile:</label>
+                    <input class="form-control" id="mobile" type="text" formControlName="mobile">
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input class="form-control" id="email" type="email" formControlName="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input class="form-control" id="password" type="password" formControlName="password">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updateUser()" >Update</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="modal fade" #deleteModal id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+              <h3>Are you sure you want to delete the profile?</h3>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click)="userDelete()">Delete</button>
+      </div>
+      </div>
+    </div>
+  </div>
