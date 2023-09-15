@@ -46,7 +46,11 @@ app.post('/login', async (req,res)=> {
        const isPasswordValid = await bcrypt.compare(lookPassword, user.password);
         
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+    //   throw new Error('Invalid password');
+    const responseData= {
+        message:"Incorrect Credentials!"
+      }
+      res.send(responseData);
     }
 
     const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
@@ -61,7 +65,7 @@ app.post('/login', async (req,res)=> {
     }else {
         console.log('User not found');
         const responseData= {
-          message:"User not found!"
+          message:"Incorrect Credentials!"
         }
         res.send(responseData);
       }

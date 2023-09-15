@@ -37,6 +37,8 @@ export class NavbarComponent implements OnInit{
     password: new FormControl('')
   })
 
+  invalidCredentials = '';
+  invalidpass = false
   userDetails:any;
 
   signup(){
@@ -44,6 +46,7 @@ export class NavbarComponent implements OnInit{
     this.service.register(this.userDetails).subscribe(data=>{
       console.log(data);
       this.signupModal.nativeElement.click();
+      this.router.navigateByUrl('/users');
     })
   }
   check(){
@@ -52,6 +55,7 @@ export class NavbarComponent implements OnInit{
   login(){
     this.userDetails = this.userLogin.value
     this.service.loginCall(this.userDetails).subscribe((data) => {
+      this.invalidpass = false;
       console.log(data)
       const token = data.token;
       this.cookies.set('token', token);
@@ -60,6 +64,18 @@ export class NavbarComponent implements OnInit{
       this.loginModal.nativeElement.click();
       
       this.router.navigateByUrl('/profile');
+    },
+    (error) => {
+      if (error.status === 401) {
+        // Handle 401 Unauthorized error here
+        // You can display an error message or perform any other action
+        console.error('Unauthorized: Please check your credentials.');
+        this.invalidCredentials = 'Authentication failed. Invalid email or password.';
+        this.invalidpass = true;
+      } else {
+        // Handle other errors here
+        console.error('An error occurred:', error);
+      }
     })
   }
 }

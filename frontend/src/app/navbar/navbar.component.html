@@ -10,8 +10,10 @@
           <div *ngIf="!islogin">
             <button type="button"  class="btn btn-outline-success mx-2 p-1" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
                 </div>
-                 <div *ngIf="islogin">
-            <button type="button"  class="btn btn-outline-success mx-2 p-1"  data-bs-toggle="modal" data-bs-target="#SignupModal">Sign Up</button>
+                 <div *ngIf="islogin" style="display:flex;">
+            <button class="btn btn-outline-success" routerLink="/profile">Profile</button>
+            <button class="btn btn-outline-success mx-2 p-1" routerLink="/users">All Users</button>
+            <button type="button"  class="btn btn-outline-success mx-2 p-1"  data-bs-toggle="modal" data-bs-target="#SignupModal">Register</button>
                 </div>
                <!-- <div>
                     <button type="button"  class="btn btn-outline-success mx-2 p-1" >Logout</button>
@@ -54,7 +56,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="signup()">Sign Up</button>
+          <button type="button" class="btn btn-primary" (click)="signup()">Register</button>
         </div>
       </div>
     </div>
@@ -77,6 +79,9 @@
                 <div class="mb-3">
                     <label for="password">Password:</label>
                     <input class="form-control" type="password" formControlName="password">
+                </div>
+                <div *ngIf="invalidpass" class="text-danger">
+                  {{invalidCredentials}}
                 </div>
               </form>
         </div>
